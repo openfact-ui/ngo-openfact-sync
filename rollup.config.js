@@ -3,7 +3,7 @@ export default {
   dest: 'dist/bundles/ngo-openfact-sync.js',
   sourceMap: false,
   format: 'umd',
-  moduleName: 'ngx.openfact.sync',
+  moduleName: 'ngo.openfact.sync',
   globals: {
     '@angular/core': 'ng.core',
     '@angular/http': 'ng.http',
