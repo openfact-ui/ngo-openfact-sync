@@ -1,6 +1,6 @@
 {
   "name": "ngo-openfact-sync",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Common services for working with Openfact Work Item Tracker",
   "main": "bundles/ngo-openfact-sync.umd.js",
   "module": "index.js",
