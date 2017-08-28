@@ -30,7 +30,7 @@ def cd (b){
     }
 
     stage('release'){
-        def published = npmRelease{
+        def published = npmReleaseOpenfact{
             branch = b
         }
         return published
@@ -40,13 +40,14 @@ def cd (b){
 def updateDownstreamProjects(v){
     echo 'we would Update Downstream Projects'
     pushPackageJSONChangePR{
-        propertyName = 'ngo-openfact-sync'
+        propertyName = 'ngx-fabric8-wit'
         projects = [
-                'openfact-ui/openfact-npm-dependencies'
+                'fabric8-ui/fabric8-npm-dependencies'
         ]
         version = v
         containerName = 'ui'
         autoMerge = true
     }
 }
+
 return this
