@@ -4,7 +4,7 @@
 def utils = new io.fabric8.Utils()
 def org = 'openfact-ui'
 def repo = 'ngo-openfact-sync'
-fabric8UINode{
+openfact8UINode{
     ws {
       git "https://github.com/${org}/${repo}.git"
       readTrusted 'release.groovy'
@@ -28,7 +28,8 @@ fabric8UINode{
 
         def releaseVersion
         releaseVersion = utils.getLatestVersionFromTag()
-        //container('ui'){          
+        //container('ui'){
+        //  releaseVersion = utils.getLatestVersionFromTag()
         //}
 
         if (published){
