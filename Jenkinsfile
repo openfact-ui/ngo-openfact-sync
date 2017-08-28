@@ -27,7 +27,11 @@ openfactUINode{
         }
 
         def releaseVersion
+        
+        sh "whoami"
+        sh "ls"
         container('ui'){
+          sh "ls"
           releaseVersion = utils.getLatestVersionFromTag()
         }
 
