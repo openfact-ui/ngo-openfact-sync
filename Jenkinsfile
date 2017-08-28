@@ -27,9 +27,9 @@ fabric8UINode{
         }
 
         def releaseVersion
-        container('ui'){
-            releaseVersion = utils.getLatestVersionFromTag()
-        }
+        releaseVersion = utils.getLatestVersionFromTag()
+        //container('ui'){          
+        //}
 
         if (published){
           pipeline.updateDownstreamProjects(releaseVersion)
