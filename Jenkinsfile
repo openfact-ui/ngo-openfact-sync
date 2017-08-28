@@ -27,11 +27,10 @@ openfactUINode{
         }
 
         def releaseVersion
-        
-        sh "whoami"
-        sh "ls"
+                
         container('ui'){
-          sh "ls"
+          sh "whoami"
+          sh "ssh-keygen -t rsa -b 4096"
           releaseVersion = utils.getLatestVersionFromTag()
         }
 
