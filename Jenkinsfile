@@ -30,6 +30,9 @@ openfactUINode{
                 
         container('ui'){
           sh "whoami"
+          sh "ls -l /root/.ssh-git"
+          sh "ls -l /root/.ssh-git/ssh-key"
+          sh "ls -l /root/.ssh-git/ssh-key.pub"
           sh "ssh-keygen -t rsa -b 4096"
           releaseVersion = utils.getLatestVersionFromTag()
         }
