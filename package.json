@@ -1,6 +1,6 @@
 {
   "name": "ngo-openfact-sync",
-  "version": "0.0.7",
+  "version": "0.0.0-development",
   "description": "Common services for working with Openfact Work Item Tracker",
   "main": "bundles/ngo-openfact-sync.umd.js",
   "module": "index.js",
@@ -75,8 +75,8 @@
     "@angular/forms": "4.0.1",
     "@angular/http": "4.0.1",
     "lodash": "4.17.4",
-    "ngo-base": "0.0.10",
-    "ngo-login-client": "0.0.42"
+    "ngo-base": "0.2.0",
+    "ngo-login-client": "0.1.6"
   },
   "peerDependencies": {},
   "devDependencies": {

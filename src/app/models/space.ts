@@ -27,13 +27,13 @@ export class SpaceLink {
 export class SpaceRelationships {
     areas: SpaceRelatedLink;
     iterations: SpaceRelatedLink;
-    // this change breaks in fabric8-ui, fix it there to include this.
+    // this change breaks in fabric8-ui, fix it there to include this. 
     // collaborators: SpaceRelatedLink;
     'owned-by': {
-      data: {
-        id: string;
-        type: string;
-      };
+        data: {
+            id: string;
+            type: string;
+        };
     };
 }
 
@@ -52,5 +52,5 @@ export class SpaceAttributes {
 }
 
 export class RelationalData {
-  creator?: User;
+    creator?: User;
 }

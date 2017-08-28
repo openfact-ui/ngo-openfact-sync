@@ -40,9 +40,9 @@ def cd (b){
 def updateDownstreamProjects(v){
     echo 'we would Update Downstream Projects'
     pushPackageJSONChangePR{
-        propertyName = 'ngx-fabric8-wit'
+        propertyName = 'ngo-openfact-sync'
         projects = [
-                'fabric8-ui/fabric8-npm-dependencies'
+                'openfact-ui/openfact-npm-dependencies'
         ]
         version = v
         containerName = 'ui'

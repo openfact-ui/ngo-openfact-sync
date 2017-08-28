@@ -61,7 +61,7 @@ export function validSpaceNameValidator(): AsyncValidatorFn {
             maxLength: {
               valid: false,
               requestedName: control.value,
-              max: ValidSpaceNameValidatorDirective.MAX_SPACE_NAME_LENGTH,
+              max: ValidSpaceNameValidatorDirective.MAX_SPACE_NAME_LENGTH
             }
           };
         }

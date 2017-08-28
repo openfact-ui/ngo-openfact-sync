@@ -23,8 +23,8 @@ export class SpaceService {
     private auth: AuthenticationService,
     private userService: UserService,
     @Inject(SYNC_API_URL) apiUrl: string) {
-    if (this.auth.getToken() != null) {
-      this.headers.set('Authorization', 'Bearer ' + this.auth.getToken());
+    if (this.auth.getAccessToken() != null) {
+      this.headers.set('Authorization', 'Bearer ' + this.auth.getAccessToken());
     }
     this.spacesUrl = apiUrl + 'spaces';
     this.namedSpacesUrl = apiUrl + 'namedspaces';
@@ -117,7 +117,7 @@ export class SpaceService {
     let url = `${this.spacesUrl}/${space.id}`;
     return this.http
       .delete(url, { headers: this.headers })
-      .map( () => {})
+      .map(() => { })
       .catch((error) => {
         return this.handleError(error);
       });

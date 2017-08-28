@@ -19,8 +19,8 @@ export class CollaboratorService {
     private logger: Logger,
     private auth: AuthenticationService,
     @Inject(SYNC_API_URL) apiUrl: string) {
-    if (this.auth.getToken() != null) {
-      this.headers.set('Authorization', 'Bearer ' + this.auth.getToken());
+    if (this.auth.getAccessToken() != null) {
+      this.headers.set('Authorization', 'Bearer ' + this.auth.getAccessToken());
     }
     this.spacesUrl = apiUrl + 'spaces';
   }
