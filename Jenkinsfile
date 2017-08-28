@@ -27,10 +27,9 @@ openfactUINode{
         }
 
         def releaseVersion
-        releaseVersion = utils.getLatestVersionFromTag()
-        //container('ui'){
-        //  releaseVersion = utils.getLatestVersionFromTag()
-        //}
+        container('ui'){
+          releaseVersion = utils.getLatestVersionFromTag()
+        }
 
         if (published){
           pipeline.updateDownstreamProjects(releaseVersion)
