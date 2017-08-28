@@ -26,14 +26,7 @@ openfactUINode{
           published = pipeline.cd(branch)
         }
 
-        def releaseVersion
-                
-        sh "ls -l /root/.ssh-git"
-        sh "ls -l /root/.ssh-git/ssh-key"
-        sh "ls -l /root/.ssh-git/ssh-key.pub"
-        sh "ssh-keygen -t rsa -b 4096"
-        sh "whoami"
-
+        def releaseVersion        
         container('ui'){          
           releaseVersion = utils.getLatestVersionFromTag()
         }
