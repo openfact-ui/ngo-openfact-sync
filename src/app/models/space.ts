@@ -1,11 +1,9 @@
 import { Team } from './team';
-import { ProcessTemplate } from './process-template';
 import { User } from 'ngo-login-client';
 
 export interface Space {
     name: string;
     path: String;
-    process?: ProcessTemplate;
     privateSpace?: boolean;
     teams: Team[];
     defaultTeam: Team;
@@ -25,10 +23,7 @@ export class SpaceLink {
 }
 
 export class SpaceRelationships {
-    areas: SpaceRelatedLink;
-    iterations: SpaceRelatedLink;
-    // this change breaks in fabric8-ui, fix it there to include this. 
-    // collaborators: SpaceRelatedLink;
+    collaborators: SpaceRelatedLink;
     'owned-by': {
         data: {
             id: string;
