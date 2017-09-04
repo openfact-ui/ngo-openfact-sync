@@ -10,7 +10,6 @@ export { ContextTypes } from './src/app/contexts/context-types';
 export { SYNC_API_URL } from './src/app/api/sync-api';
 
 // Spaces
-export { ProcessTemplate } from './src/app/models/process-template';
 export {
   Space,
   SpaceAttributes,
