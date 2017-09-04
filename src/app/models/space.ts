@@ -39,6 +39,7 @@ export class SpaceRelatedLink {
 }
 
 export class SpaceAttributes {
+    assignedId: string;
     name: string;
     description: string;
     'updated-at': string;
