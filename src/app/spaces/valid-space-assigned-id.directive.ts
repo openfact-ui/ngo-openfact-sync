@@ -9,20 +9,20 @@ import {
 } from '@angular/forms';
 
 @Directive({
-  selector: '[validSpaceName][ngModel]',
+  selector: '[validSpaceAssignedId][ngModel]',
   providers: [{
     provide: NG_ASYNC_VALIDATORS,
-    useExisting: forwardRef(() => ValidSpaceNameValidatorDirective), multi: true
+    useExisting: forwardRef(() => ValidSpaceAssignedIdValidatorDirective), multi: true
   }]
 })
-export class ValidSpaceNameValidatorDirective implements Validator, OnChanges {
+export class ValidSpaceAssignedIdValidatorDirective implements Validator, OnChanges {
 
   static readonly ALLOWED_SPACE_NAMES = /^[a-z\d][a-z\d\s-_]*[a-z\d]$/i;
   static readonly MIN_SPACE_NAME_LENGTH = 4;
   static readonly MAX_SPACE_NAME_LENGTH = 63;
 
 
-  @Input() validSpaceName: boolean;
+  @Input() validSpaceAssignedId: boolean;
 
   private valFn: any;
 
@@ -31,9 +31,9 @@ export class ValidSpaceNameValidatorDirective implements Validator, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    let change = changes['validSpaceName'];
+    let change = changes['validSpaceAssignedId'];
     if (change) {
-      this.valFn = validSpaceNameValidator();
+      this.valFn = validSpaceAssignedIdValidator();
     } else {
       this.valFn = Validators.nullValidator;
     }
@@ -45,7 +45,7 @@ export class ValidSpaceNameValidatorDirective implements Validator, OnChanges {
 
 }
 
-export function validSpaceNameValidator(): AsyncValidatorFn {
+export function validSpaceAssignedIdValidator(): AsyncValidatorFn {
 
   let changed$ = new Subject<any>();
 
@@ -57,30 +57,30 @@ export function validSpaceNameValidator(): AsyncValidatorFn {
       .takeUntil(changed$)
       .map(value => {
         // tslint:disable-next-line:max-line-length
-        if (!control.value || control.value.toString().length > ValidSpaceNameValidatorDirective.MAX_SPACE_NAME_LENGTH) {
+        if (!control.value || control.value.toString().length > ValidSpaceAssignedIdValidatorDirective.MAX_SPACE_NAME_LENGTH) {
           return {
             maxLength: {
               valid: false,
               requestedName: control.value,
-              max: ValidSpaceNameValidatorDirective.MAX_SPACE_NAME_LENGTH
+              max: ValidSpaceAssignedIdValidatorDirective.MAX_SPACE_NAME_LENGTH
             }
           };
         }
         let strVal: string = control.value.toString();
-        if (strVal.length < ValidSpaceNameValidatorDirective.MIN_SPACE_NAME_LENGTH) {
+        if (strVal.length < ValidSpaceAssignedIdValidatorDirective.MIN_SPACE_NAME_LENGTH) {
           return {
             minLength: {
               valid: false,
               requestedName: control.value,
-              min: ValidSpaceNameValidatorDirective.MIN_SPACE_NAME_LENGTH
+              min: ValidSpaceAssignedIdValidatorDirective.MIN_SPACE_NAME_LENGTH
             }
           };
-        } else if (!strVal.match(ValidSpaceNameValidatorDirective.ALLOWED_SPACE_NAMES)) {
+        } else if (!strVal.match(ValidSpaceAssignedIdValidatorDirective.ALLOWED_SPACE_NAMES)) {
           return {
             invalid: {
               valid: false,
               requestedName: control.value,
-              allowedChars: ValidSpaceNameValidatorDirective.ALLOWED_SPACE_NAMES
+              allowedChars: ValidSpaceAssignedIdValidatorDirective.ALLOWED_SPACE_NAMES
             }
           };
         }

@@ -11,16 +11,16 @@ import {
 } from '@angular/forms';
 
 @Directive({
-  selector: '[uniqueSpaceName][ngModel]',
+  selector: '[uniqueSpaceAssignedId][ngModel]',
   providers: [{
     provide: NG_ASYNC_VALIDATORS,
-    useExisting: forwardRef(() => UniqueSpaceNameValidatorDirective), multi: true
+    useExisting: forwardRef(() => UniqueSpaceAssignedIdValidatorDirective), multi: true
   }]
 })
-export class UniqueSpaceNameValidatorDirective implements Validator, OnChanges {
+export class UniqueSpaceAssignedIdValidatorDirective implements Validator, OnChanges {
 
 
-  @Input() uniqueSpaceName: boolean;
+  @Input() uniqueSpaceAssignedId: boolean;
 
   private valFn: any;
 
@@ -29,9 +29,9 @@ export class UniqueSpaceNameValidatorDirective implements Validator, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    let change = changes['uniqueSpaceName'];
+    let change = changes['uniqueSpaceAssignedId'];
     if (change) {
-      this.valFn = uniqueSpaceNameValidator(this.spaceService, this.userService);
+      this.valFn = uniqueSpaceAssignedIdValidator(this.spaceService, this.userService);
     } else {
       this.valFn = Validators.nullValidator;
     }
@@ -43,7 +43,7 @@ export class UniqueSpaceNameValidatorDirective implements Validator, OnChanges {
 
 }
 
-export function uniqueSpaceNameValidator(
+export function uniqueSpaceAssignedIdValidator(
   spaceService: SpaceService,
   userService: UserService): AsyncValidatorFn {
 
@@ -58,7 +58,8 @@ export function uniqueSpaceNameValidator(
       .switchMap(value => userService.loggedInUser
         .switchMap(user => {
           return spaceService
-            .getSpaceByName(user.attributes.username, control.value ? control.value.replace(' ', '_') : control.value)
+            // tslint:disable-next-line:max-line-length
+            .getSpaceByAssignedId(user.id, control.value ? control.value.replace(' ', '_') : control.value)
             .map(val => {
               return { unique: { valid: false, existingSpace: val, requestedName: control.value } };
             })
