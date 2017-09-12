@@ -23,6 +23,9 @@ export class SpaceService {
     private auth: AuthenticationService,
     private userService: UserService,
     @Inject(SYNC_API_URL) apiUrl: string) {
+    if (this.auth.getToken() != null) {
+      this.headers.set('Authorization', 'Bearer ' + this.auth.getToken());
+    }
     this.spacesUrl = apiUrl + 'spaces';
     this.namedSpacesUrl = apiUrl + 'namedspaces';
     this.searchSpacesUrl = apiUrl + 'search/spaces';
@@ -43,7 +46,7 @@ export class SpaceService {
 
   getSpaceByAssignedId(userId: string, spaceAssignedId: string): Observable<Space> {
     let url = `${this.namedSpacesUrl}/${userId}/${spaceAssignedId}`;
-    return this.http.get(url, { headers: this.headers, withCredentials: true })
+    return this.http.get(url, { headers: this.headers })
       .map((response) => {
         return response.json().data as Space;
       })
@@ -55,7 +58,7 @@ export class SpaceService {
 
   getSpacesDelegate(url: string, isAll: boolean): Observable<Space[]> {
     return this.http
-      .get(url, { headers: this.headers, withCredentials: true })
+      .get(url, { headers: this.headers })
       .map(response => {
         // Extract links from JSON API response.
         // and set the nextLink, if server indicates more resources
@@ -82,7 +85,7 @@ export class SpaceService {
     let url = this.spacesUrl;
     let payload = JSON.stringify({ data: space });
     return this.http
-      .post(url, payload, { headers: this.headers, withCredentials: true })
+      .post(url, payload, { headers: this.headers })
       .map(response => {
         return response.json().data as Space;
       })
@@ -98,7 +101,7 @@ export class SpaceService {
     let url = `${this.spacesUrl}/${space.id}`;
     let payload = JSON.stringify({ data: space });
     return this.http
-      .patch(url, payload, { headers: this.headers, withCredentials: true })
+      .patch(url, payload, { headers: this.headers })
       .map(response => {
         return response.json().data as Space;
       })
@@ -113,7 +116,7 @@ export class SpaceService {
   deleteSpace(space: Space): Observable<Space> {
     let url = `${this.spacesUrl}/${space.id}`;
     return this.http
-      .delete(url, { headers: this.headers, withCredentials: true })
+      .delete(url, { headers: this.headers })
       .map(() => { })
       .catch((error) => {
         return this.handleError(error);
@@ -163,7 +166,7 @@ export class SpaceService {
 
   getSpaceById(spaceId: string): Observable<Space> {
     let url = `${this.spacesUrl}/${spaceId}`;
-    return this.http.get(url, { headers: this.headers, withCredentials: true })
+    return this.http.get(url, { headers: this.headers })
       .map((response) => {
         return response.json().data as Space;
       })
