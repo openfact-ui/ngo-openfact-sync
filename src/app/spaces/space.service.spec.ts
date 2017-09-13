@@ -75,6 +75,7 @@ describe('Service: SpaceService', () => {
       teams: [],
       defaultTeam: null,
       'attributes': {
+        'assignedId': '123456789',
         'name': 'TestSpace',
         description: 'This is a space for unit test',
         'created-at': null,
@@ -87,16 +88,6 @@ describe('Service: SpaceService', () => {
         'self': 'http://example.com/api/spaces/1'
       },
       'relationships': {
-        areas: {
-          links: {
-            related: 'http://example.com/api/spaces/1/areas'
-          }
-        },
-        iterations: {
-          links: {
-            related: 'http://example.com/api/spaces/1/iterations'
-          }
-        },
         collaborators: {
           links: {
             related: 'http://example.com/api/spaces/1/iterations'
@@ -217,7 +208,7 @@ describe('Service: SpaceService', () => {
     });
     let userName = 'testuser';
     // when
-    spaceService.getSpaceByName(userName, responseData[0].attributes.name)
+    spaceService.getSpaceByAssignedId(userName, responseData[0].attributes.name)
       .subscribe((data: Space) => {
         // then
         expect(data.id).toEqual(expectedResponse[0].id);
@@ -234,7 +225,7 @@ describe('Service: SpaceService', () => {
     });
     let userName = 'testuser';
     // when
-    spaceService.getSpaceByName(userName, responseData[0].attributes.name)
+    spaceService.getSpaceByAssignedId(userName, responseData[0].attributes.name)
       .subscribe((data: Space) => {
         fail('Get a single space should be in error');
       }, // then

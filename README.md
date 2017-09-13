@@ -23,19 +23,19 @@ There are several services and a couple of models used by them available.
     SpaceService
   
 You must provide the URL to API to do the login. To do this, you must provide 
-a `string` with an OpaqueToken `WIT_API_URL` from `ngo-openfact-sync`. We suggest using a
+a `string` with an OpaqueToken `SYNC_API_URL` from `ngo-openfact-sync`. We suggest using a
 factory provider for this. For example:
 
 ````
 import { ApiLocatorService } from './api-locator.service';
-import { WIT_API_URL } from 'ngo-openfact-sync';
+import { SYNC_API_URL } from 'ngo-openfact-sync';
 
 let authApiUrlFactory = (api: ApiLocatorService) => {
   return api.witApiUrl;
 };
 
-export let witApiUrlProvider = {
-  provide: WIT_API_URL,
+export let syncApiUrlProvider = {
+  provide: SYNC_API_URL,
   useFactory: witApiUrlFactory,
   deps: [ApiLocatorService]
 };
@@ -44,7 +44,7 @@ export let witApiUrlProvider = {
 NOTE: `ApiLocatorService` is a service that we use to construct API URLs using patterns determined
 by our application architecture, you can implement this part however you like.
 
-Finally you need to register `witApiUrlProvider` with a module or a component.
+Finally you need to register `syncApiUrlProvider` with a module or a component.
  
 
 ## Building it 

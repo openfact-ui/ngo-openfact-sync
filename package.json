@@ -75,8 +75,8 @@
     "@angular/forms": "4.0.1",
     "@angular/http": "4.0.1",
     "lodash": "4.17.4",
-    "ngo-base": "0.3.0",
-    "ngo-login-client": "0.2.0"
+    "ngo-base": "0.6.1",
+    "ngo-login-client": "0.2.1"
   },
   "peerDependencies": {},
   "devDependencies": {
