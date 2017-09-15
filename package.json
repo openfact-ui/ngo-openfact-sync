@@ -68,7 +68,7 @@
     "@angular/http": "4.3.6",
     "lodash": "4.17.4",
     "ngo-base": "0.6.3",
-    "ngo-login-client": "0.2.4",
+    "ngo-login-client": "0.2.5",
     "rxjs": "5.4.3"
   },
   "peerDependencies": {},
