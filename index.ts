@@ -39,3 +39,14 @@ export {
   GenericData,
   RelationGeneric
 } from './src/app/models/generic';
+
+// Documents
+export {
+  UBLDocument,
+  UBLDocumentAttributes,
+  UBLDocumentLink,
+  UBLDocumentRelationships,
+  UBLDocumentRelationalData
+} from './src/app/models/ubl-document';
+export { UBLDocumentService } from './src/app/documents/ubl-document.service';
+export { UBLDocuments } from './src/app/documents/ubl-documents';
