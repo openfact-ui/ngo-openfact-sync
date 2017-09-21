@@ -1,7 +1,9 @@
+import { Space } from './../models/space';
+import { SpaceService } from './../spaces/space.service';
 import { Injectable, Inject } from '@angular/core';
 import { Headers, Http, URLSearchParams } from '@angular/http';
 import { cloneDeep } from 'lodash';
-import { AuthenticationService, User, UserService } from 'ngo-login-client';
+import { AuthenticationService } from 'ngo-login-client';
 import { Logger } from 'ngo-base';
 import { Observable } from 'rxjs';
 
@@ -21,7 +23,7 @@ export class UBLDocumentService {
     private http: Http,
     private logger: Logger,
     private auth: AuthenticationService,
-    private userService: UserService,
+    private spaceService: SpaceService,
     @Inject(SYNC_API_URL) apiUrl: string) {
     if (this.auth.getToken() != null) {
       this.headers.set('Authorization', 'Bearer ' + this.auth.getToken());
@@ -214,8 +216,8 @@ export class UBLDocumentService {
       document.relationalData.creator = null;
       return;
     }
-    return this.userService
-      .getUserByUserId(document.relationships['owned-by'].data.id)
+    return this.spaceService
+      .getSpaceById(document.relationships['owned-by'].data.id)
       .map(owner => {
         document.relationalData.creator = owner;
         return document;
@@ -230,13 +232,13 @@ export class UBLDocumentService {
       .map(document => document.relationships['owned-by'].data.id)
       // Get only the unique owners in this stream of owner Ids
       .distinct()
-      // Get the users from the server based on the owner Ids
+      // Get the spaces from the server based on the owner Ids
       // and flatten the resulting stream , observables are returned
-      .flatMap(ownerId => this.userService.getUserByUserId(ownerId).catch(err => {
-        console.log('Error fetching user', ownerId, err);
-        return Observable.empty<User>();
+      .flatMap(ownerId => this.spaceService.getSpaceById(ownerId).catch(err => {
+        console.log('Error fetching space', ownerId, err);
+        return Observable.empty<Space>();
       }))
-      // map the user objects back to the documents to return a stream of documents
+      // map the space objects back to the documents to return a stream of documents
       .map(owner => {
         if (owner) {
           for (let document of documents) {

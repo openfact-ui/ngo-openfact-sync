@@ -1,4 +1,4 @@
-import { User } from 'ngo-login-client';
+import { Space } from './space';
 
 export interface UBLDocument {
     id: string;
@@ -14,12 +14,11 @@ export interface UBLDocument {
 
 export class UBLDocumentLink {
     self: string;
+    filelink: string;
     filters?: string;
 }
 
 export class UBLDocumentRelationships {
-    supplier: any;
-    customer: any;
     'owned-by': {
         data: {
             id: string;
@@ -28,15 +27,19 @@ export class UBLDocumentRelationships {
     };
 }
 
+export interface UBLDocumentTags<T> {
+    [id: string]: T;
+}
+
 export class UBLDocumentAttributes {
     id: string;
     assignedId: string;
     documentType: string;
-    tags: any;
+    tags: UBLDocumentTags<string>;
     'updated-at': string;
     'created-at': string;
 }
 
 export class UBLDocumentRelationalData {
-    creator?: User;
+    creator?: Space;
 }
