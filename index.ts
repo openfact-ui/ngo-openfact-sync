@@ -21,12 +21,8 @@ export {
 export { Team } from './src/app/models/team';
 export { SpaceService } from './src/app/spaces/space.service';
 export { Spaces } from './src/app/spaces/spaces';
-export {
-  UniqueSpaceAssignedIdValidatorDirective
-} from './src/app/spaces/unique-space-assigned-id.directive';
-export {
-  ValidSpaceAssignedIdValidatorDirective
-} from './src/app/spaces/valid-space-assigned-id.directive';
+export { UniqueSpaceAssignedIdValidatorDirective } from './src/app/spaces/unique-space-assigned-id.directive';
+export { ValidSpaceAssignedIdValidatorDirective } from './src/app/spaces/valid-space-assigned-id.directive';
 export { ValidSpaceNameValidatorDirective } from './src/app/spaces/valid-space-name.directive';
 export { SpaceNamePipe } from './src/app/spaces/space-name.pipe';
 

@@ -2,51 +2,51 @@ import { Team } from './team';
 import { User } from 'ngo-login-client';
 
 export interface Space {
-    name: string;
-    path: String;
-    privateSpace?: boolean;
-    teams: Team[];
-    defaultTeam: Team;
-    id: string;
-    attributes: SpaceAttributes;
-    type: string;
-    links: SpaceLink;
-    relationships: SpaceRelationships;
-    relationalData?: RelationalData;
+  name: string;
+  path: String;
+  privateSpace?: boolean;
+  teams: Team[];
+  defaultTeam: Team;
+  id: string;
+  attributes: SpaceAttributes;
+  type: string;
+  links: SpaceLink;
+  relationships: SpaceRelationships;
+  relationalData?: RelationalData;
 }
 
 export class SpaceLink {
-    self: string;
-    filters?: string;
-    workitemlinktypes?: string;
-    workitemtypes?: string;
+  self: string;
+  filters?: string;
+  workitemlinktypes?: string;
+  workitemtypes?: string;
 }
 
 export class SpaceRelationships {
-    collaborators: SpaceRelatedLink;
-    'owned-by': {
-        data: {
-            id: string;
-            type: string;
-        };
+  collaborators: SpaceRelatedLink;
+  'owned-by': {
+    data: {
+      id: string;
+      type: string;
     };
+  };
 }
 
 export class SpaceRelatedLink {
-    links: {
-        related: string
-    };
+  links: {
+    related: string
+  };
 }
 
 export class SpaceAttributes {
-    assignedId: string;
-    name: string;
-    description: string;
-    'updated-at': string;
-    'created-at': string;
-    version: number;
+  assignedId: string;
+  name: string;
+  description: string;
+  'updated-at': string;
+  'created-at': string;
+  version: number;
 }
 
 export class RelationalData {
-    creator?: User;
+  creator?: User;
 }

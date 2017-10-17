@@ -44,8 +44,8 @@ export class SpaceService {
     }
   }
 
-  getSpaceByAssignedId(userId: string, spaceAssignedId: string): Observable<Space> {
-    let url = `${this.namedSpacesUrl}/${userId}/${spaceAssignedId}`;
+  getSpaceByAssignedId(userName: string, spaceAssignedId: string): Observable<Space> {
+    let url = `${this.namedSpacesUrl}/${userName}/${spaceAssignedId}`;
     return this.http.get(url, { headers: this.headers })
       .map((response) => {
         return response.json().data as Space;
@@ -145,13 +145,9 @@ export class SpaceService {
       });
   }
 
-  /**
-   * Currently serves to fetch the list of all spaces owned by a user.
-   * @param userId
-   * @param pageSize
-   */
-  getSpacesByUser(userId: string, pageSize: number = 20): Observable<Space[]> {
-    let url = `${this.namedSpacesUrl}/${userId}` + '?page[limit]=' + pageSize;
+  // Currently serves to fetch the list of all spaces owned by a user.
+  getSpacesByUser(userName: string, pageSize: number = 20): Observable<Space[]> {
+    let url = `${this.namedSpacesUrl}/${userName}` + '?page[limit]=' + pageSize;
     let isAll = false;
     return this.getSpacesDelegate(url, isAll);
   }

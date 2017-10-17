@@ -1,21 +1,23 @@
-import { async, inject, TestBed } from '@angular/core/testing';
+import { async, getTestBed, inject, TestBed } from '@angular/core/testing';
 import { BaseRequestOptions, Http, Response, ResponseOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 
 import { cloneDeep } from 'lodash';
 
-import { AuthenticationService, UserService, AUTH_API_URL } from 'ngo-login-client';
+import { AuthenticationService, UserService, AUTH_API_URL, User } from 'ngo-login-client';
 import { Broadcaster, Logger } from 'ngo-base';
 
-import { SYNC_API_URL } from '../api/sync-api';
+import { SYNC_API_URL } from "../api/sync-api";
 import { Space } from '../models/space';
 import { SpaceService } from './space.service';
+import { Observable } from 'rxjs/Observable';
 
 describe('Service: SpaceService', () => {
 
   let spaceService: SpaceService;
   let mockService: MockBackend;
   let fakeAuthService: any;
+  let fakeUserService: any;
   let mockLog: any;
 
   beforeEach(() => {
@@ -26,6 +28,11 @@ describe('Service: SpaceService', () => {
       },
       isLoggedIn: function () {
         return true;
+      }
+    };
+    fakeUserService = {
+      getUserByUserId: function (userId: string) {
+        return Observable.empty<User>();
       }
     };
     TestBed.configureTestingModule({
@@ -45,19 +52,25 @@ describe('Service: SpaceService', () => {
           provide: AuthenticationService,
           useValue: fakeAuthService
         },
+        {
+          provide: UserService,
+          useValue: fakeUserService
+        },
         SpaceService,
         {
           provide: SYNC_API_URL,
-          useValue: 'http://example.com'
+          useValue: "http://example.com"
         },
         {
           provide: AUTH_API_URL,
           useValue: 'http://example.com/auth'
         },
-        UserService,
         Broadcaster
       ]
-    });
+    }).compileComponents().then(() => {
+      //spaceService = TestBed.get(SpaceService);
+
+    })
   });
 
   beforeEach(inject(
@@ -106,7 +119,7 @@ describe('Service: SpaceService', () => {
   let expectedResponse = cloneDeep(responseData);
 
 
-  it('Get spaces', async(() => {
+  it('Get spaces', (() => {
     // given
     mockService.connections.subscribe((connection: any) => {
       connection.mockRespond(new Response(
@@ -206,7 +219,7 @@ describe('Service: SpaceService', () => {
         })
       ));
     });
-    let userName = 'testuser';
+    let userName = "testuser";
     // when
     spaceService.getSpaceByAssignedId(userName, responseData[0].attributes.name)
       .subscribe((data: Space) => {
@@ -223,7 +236,7 @@ describe('Service: SpaceService', () => {
     mockService.connections.subscribe((connection: any) => {
       connection.mockError(new Error('some error'));
     });
-    let userName = 'testuser';
+    let userName = "testuser";
     // when
     spaceService.getSpaceByAssignedId(userName, responseData[0].attributes.name)
       .subscribe((data: Space) => {
@@ -244,7 +257,7 @@ describe('Service: SpaceService', () => {
       ));
     });
 
-    spaceService.search('test')
+    spaceService.search("test")
       .subscribe((data: Space[]) => {
         expect(data[0].id).toEqual(matchedData[0].id);
         expect(data[0].attributes.name).toEqual(matchedData[0].attributes.name);
@@ -260,7 +273,7 @@ describe('Service: SpaceService', () => {
       connection.mockError(new Error('some error'));
     });
     // when
-    spaceService.search('test')
+    spaceService.search("test")
       .subscribe((data: Space[]) => {
         fail('Search a space by name should be in error');
       }, // then
