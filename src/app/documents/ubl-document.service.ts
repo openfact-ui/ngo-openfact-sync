@@ -1,3 +1,4 @@
+import { UBLDocumentQuery } from './../models/ubl-document-query';
 import { Space } from './../models/space';
 import { SpaceService } from './../spaces/space.service';
 import { Injectable, Inject } from '@angular/core';
@@ -95,7 +96,7 @@ export class UBLDocumentService {
   }
 
   /**
-   * 
+   *
    */
   create(document: UBLDocument): Observable<UBLDocument> {
     let url = this.documentsUrl;
@@ -148,13 +149,12 @@ export class UBLDocumentService {
   /**
    * Filter documents. If empty then searchText becomes '*'
    */
-  search(searchText: string): Observable<UBLDocument[]> {
+  search(query: UBLDocumentQuery): Observable<UBLDocument[]> {
     let url = this.searchDocumentsUrl;
     let params: URLSearchParams = new URLSearchParams();
-    if (searchText === '') {
-      searchText = '*';
+    if (query !== null && query !== undefined) {
+      params.set('q', JSON.stringify(query));
     }
-    params.set('q', searchText);
 
     return this.http
       .get(url, { search: params, headers: this.headers })
@@ -162,9 +162,9 @@ export class UBLDocumentService {
         // Extract data from JSON API response, and assert to an array of documents.
         return response.json().data as UBLDocument[];
       })
-      .switchMap(documents => {
-        return this.resolveOwners(documents);
-      })
+      //.switchMap(documents => {
+      //  return this.resolveOwners(documents);
+      //})
       .catch((error) => {
         return this.handleError(error);
       });
