@@ -1,4 +1,3 @@
-import { UBLDocumentQuery } from './../models/ubl-document-query';
 import { Space } from './../models/space';
 import { SpaceService } from './../spaces/space.service';
 import { Injectable, Inject } from '@angular/core';
@@ -149,12 +148,13 @@ export class UBLDocumentService {
   /**
    * Filter documents. If empty then searchText becomes '*'
    */
-  search(query: UBLDocumentQuery): Observable<UBLDocument[]> {
+  search(searchText: string): Observable<UBLDocument[]> {
     let url = this.searchDocumentsUrl;
     let params: URLSearchParams = new URLSearchParams();
-    if (query !== null && query !== undefined) {
-      params.set('q', JSON.stringify(query));
+    if (searchText === '') {
+      searchText = '*';
     }
+    params.set('q', searchText);
 
     return this.http
       .get(url, { search: params, headers: this.headers })

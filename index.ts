@@ -47,4 +47,3 @@ export {
 } from './src/app/models/ubl-document';
 export { UBLDocumentService } from './src/app/documents/ubl-document.service';
 export { UBLDocuments } from './src/app/documents/ubl-documents';
-export { UBLDocumentQuery } from './src/app/models/ubl-document-query';
