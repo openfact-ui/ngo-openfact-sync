@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 import { SYNC_API_URL } from '../api/sync-api';
 import { Space } from '../models/space';
 
-import 'rxjs/add/operator/switchMap';
+//import 'rxjs/add/operator/switchMap';
 
 @Injectable()
 export class SpaceService {
