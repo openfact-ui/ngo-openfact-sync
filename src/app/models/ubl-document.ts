@@ -30,7 +30,7 @@ export class UBLDocumentRelationships {
 export class UBLDocumentAttributes {
     id: string;
     assignedId: string;
-    documentType: string;
+    type: string;
     stared: boolean;
     tags: string[];
     'updated-at': string;
