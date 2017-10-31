@@ -27,15 +27,12 @@ export class UBLDocumentRelationships {
     };
 }
 
-export interface UBLDocumentTags<T> {
-    [id: string]: T;
-}
-
 export class UBLDocumentAttributes {
     id: string;
     assignedId: string;
     documentType: string;
-    tags: UBLDocumentTags<string>;
+    stared: boolean;
+    tags: string[];
     'updated-at': string;
     'created-at': string;
 }

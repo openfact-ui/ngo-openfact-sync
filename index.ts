@@ -38,7 +38,6 @@ export {
 
 // Documents
 export {
-  UBLDocumentTags,
   UBLDocument,
   UBLDocumentAttributes,
   UBLDocumentLink,
