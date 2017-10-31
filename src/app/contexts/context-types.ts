@@ -17,6 +17,13 @@ export class ContextTypes {
       } as ContextType
     ],
     [
+      'document',
+      {
+        name: 'Document',
+        icon: 'fa fa-file-code-o',
+      } as ContextType
+    ],
+    [
       'team',
       {
         name: 'Team',
