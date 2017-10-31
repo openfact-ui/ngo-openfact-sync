@@ -63,7 +63,6 @@ export class UBLDocumentService {
       .map((response) => {
         return response.json().data as UBLDocument;
       })
-      .switchMap(val => this.resolveOwner(val))
       .catch((error) => {
         return this.handleError(error);
       });
@@ -86,9 +85,6 @@ export class UBLDocumentService {
         let newDocuments: UBLDocument[] = response.json().data as UBLDocument[];
         return newDocuments;
       })
-      .switchMap(documents => {
-        return this.resolveOwners(documents);
-      })
       .catch((error) => {
         return this.handleError(error);
       });
@@ -105,9 +101,6 @@ export class UBLDocumentService {
       .map(response => {
         return response.json().data as UBLDocument;
       })
-      .switchMap(val => {
-        return this.resolveOwner(val);
-      })
       .catch((error) => {
         return this.handleError(error);
       });
@@ -123,9 +116,6 @@ export class UBLDocumentService {
       .patch(url, payload, { headers: this.headers })
       .map(response => {
         return response.json().data as UBLDocument;
-      })
-      .switchMap(val => {
-        return this.resolveOwner(val);
       })
       .catch((error) => {
         return this.handleError(error);
@@ -198,7 +188,6 @@ export class UBLDocumentService {
       .map((response) => {
         return response.json().data as UBLDocument;
       })
-      .switchMap(val => this.resolveOwner(val))
       .catch((error) => {
         return this.handleError(error);
       });
@@ -207,49 +196,6 @@ export class UBLDocumentService {
   private handleError(error: any) {
     this.logger.error(error);
     return Observable.throw(error.message || error);
-  }
-
-  private resolveOwner(document: UBLDocument): Observable<UBLDocument> {
-    document.relationalData = document.relationalData || {};
-
-    if (!document.relationships['owned-by'] || !document.relationships['owned-by'].data) {
-      document.relationalData.creator = null;
-      return;
-    }
-    return this.spaceService
-      .getSpaceById(document.relationships['owned-by'].data.id)
-      .map(owner => {
-        document.relationalData.creator = owner;
-        return document;
-      });
-  }
-
-  private resolveOwners(documents: UBLDocument[]): Observable<UBLDocument[]> {
-    return Observable
-      // Get a stream of documents
-      .from(documents)
-      // Map to a stream of owner Ids of these documents
-      .map(document => document.relationships['owned-by'].data.id)
-      // Get only the unique owners in this stream of owner Ids
-      .distinct()
-      // Get the spaces from the server based on the owner Ids
-      // and flatten the resulting stream , observables are returned
-      .flatMap(ownerId => this.spaceService.getSpaceById(ownerId).catch(err => {
-        console.log('Error fetching space', ownerId, err);
-        return Observable.empty<Space>();
-      }))
-      // map the space objects back to the documents to return a stream of documents
-      .map(owner => {
-        if (owner) {
-          for (let document of documents) {
-            document.relationalData = document.relationalData || {};
-            if (owner.id === document.relationships['owned-by'].data.id) {
-              document.relationalData.creator = owner;
-            }
-          }
-        }
-        return documents;
-      });
   }
 
 }
