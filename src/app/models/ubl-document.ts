@@ -31,7 +31,7 @@ export class UBLDocumentAttributes {
     id: string;
     assignedId: string;
     type: string;
-    starred: boolean;
+    starred: boolean; //
     tags: string[];
     'updated-at': string;
     'created-at': string;
