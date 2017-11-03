@@ -1,7 +1,7 @@
 import { Space } from './../models/space';
 import { SpaceService } from './../spaces/space.service';
 import { Injectable, Inject } from '@angular/core';
-import { Headers, Http, URLSearchParams } from '@angular/http';
+import { Headers, Http, URLSearchParams, RequestOptions, ResponseContentType } from '@angular/http';
 import { cloneDeep } from 'lodash';
 import { AuthenticationService } from 'ngo-login-client';
 import { Logger } from 'ngo-base';
@@ -187,6 +187,25 @@ export class UBLDocumentService {
     return this.http.get(url, { headers: this.headers })
       .map((response) => {
         return response.json().data as UBLDocument;
+      })
+      .catch((error) => {
+        return this.handleError(error);
+      });
+  }
+
+  /**
+   * Get document by id
+   */
+  getDocumentReportById(documentId: string, body?: any): Observable<UBLDocument> {
+    let url = `${this.documentsUrl}/${documentId}/report`;
+    return this.http.post(url, body, {
+      headers: this.headers,
+      responseType: ResponseContentType.Blob
+    })
+      .map((response) => {
+        let file = response.blob();
+        let blob = new Blob([file]);
+        return blob;
       })
       .catch((error) => {
         return this.handleError(error);
