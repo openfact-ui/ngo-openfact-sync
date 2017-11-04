@@ -193,9 +193,22 @@ export class UBLDocumentService {
       });
   }
 
-  /**
-   * Get document by id
-   */
+  getDocumentXmlById(documentId: string): Observable<UBLDocument> {
+    let url = `${this.documentsUrl}/${documentId}/xml`;
+    return this.http.get(url, {
+      headers: this.headers,
+      responseType: ResponseContentType.Blob
+    })
+      .map((response) => {
+        let file = response.blob();
+        let blob = new Blob([file]);
+        return blob;
+      })
+      .catch((error) => {
+        return this.handleError(error);
+      });
+  }
+
   getDocumentReportById(documentId: string, theme?: string, format?: string): Observable<UBLDocument> {
     let params = new URLSearchParams();
     if (theme) params.append('theme', theme);
