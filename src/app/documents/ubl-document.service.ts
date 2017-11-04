@@ -196,11 +196,16 @@ export class UBLDocumentService {
   /**
    * Get document by id
    */
-  getDocumentReportById(documentId: string, body?: any): Observable<UBLDocument> {
+  getDocumentReportById(documentId: string, theme?: string, format?: string): Observable<UBLDocument> {
+    let params = new URLSearchParams();
+    if (theme) params.append('theme', theme);
+    if (format) params.append('format', format);
+
     let url = `${this.documentsUrl}/${documentId}/report`;
-    return this.http.post(url, body, {
+    return this.http.get(url, {
       headers: this.headers,
-      responseType: ResponseContentType.Blob
+      responseType: ResponseContentType.Blob,
+      params: params
     })
       .map((response) => {
         let file = response.blob();
