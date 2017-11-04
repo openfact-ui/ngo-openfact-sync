@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 
 import { SYNC_API_URL } from '../api/sync-api';
 import { UBLDocument } from '../models/ubl-document';
+import { FileWrapper } from './../models/file-wrapper';
 
 @Injectable()
 export class UBLDocumentService {
@@ -193,23 +194,37 @@ export class UBLDocumentService {
       });
   }
 
-  getDocumentXmlById(documentId: string): Observable<UBLDocument> {
+  getDocumentXmlById(documentId: string): Observable<FileWrapper> {
     let url = `${this.documentsUrl}/${documentId}/xml`;
     return this.http.get(url, {
       headers: this.headers,
       responseType: ResponseContentType.Blob
     })
       .map((response) => {
+        let filename;
+        let headers = response.headers;
+        let disposition = headers.get('Content-Disposition');
+        if (disposition && disposition.indexOf('attachment') !== -1) {
+          var filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+          var matches = filenameRegex.exec(disposition);
+          if (matches != null && matches[1]) {
+            filename = matches[1].replace(/['"]/g, '');
+          }
+        }
+
         let file = response.blob();
         let blob = new Blob([file]);
-        return blob;
+        return {
+          filename: filename,
+          file: blob
+        } as FileWrapper;
       })
       .catch((error) => {
         return this.handleError(error);
       });
   }
 
-  getDocumentReportById(documentId: string, theme?: string, format?: string): Observable<UBLDocument> {
+  getDocumentReportById(documentId: string, theme?: string, format?: string): Observable<FileWrapper> {
     let params = new URLSearchParams();
     if (theme) params.append('theme', theme);
     if (format) params.append('format', format);
@@ -221,9 +236,24 @@ export class UBLDocumentService {
       params: params
     })
       .map((response) => {
+        let filename;
+        let headers = response.headers;
+        let disposition = headers.get('Content-Disposition');
+        if (disposition && disposition.indexOf('attachment') !== -1) {
+          var filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+          var matches = filenameRegex.exec(disposition);
+          if (matches != null && matches[1]) {
+            filename = matches[1].replace(/['"]/g, '');
+          }
+        }
+
         let file = response.blob();
         let blob = new Blob([file]);
-        return blob;
+
+        return {
+          filename: filename,
+          file: blob
+        } as FileWrapper;
       })
       .catch((error) => {
         return this.handleError(error);
