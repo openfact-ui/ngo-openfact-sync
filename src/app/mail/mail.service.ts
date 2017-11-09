@@ -17,7 +17,7 @@ export class MailService {
   constructor(
     private http: Http,
     private logger: Logger,
-    private auth: AuthenticationService
+    private auth: AuthenticationService,
     @Inject(SYNC_API_URL) apiUrl: string) {
     if (this.auth.getToken() != null) {
       this.headers.set('Authorization', 'Bearer ' + this.auth.getToken());
