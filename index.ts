@@ -47,3 +47,7 @@ export {
 export { UBLDocumentService } from './src/app/documents/ubl-document.service';
 export { UBLDocuments } from './src/app/documents/ubl-documents';
 export { FileWrapper } from './src/app/models/file-wrapper';
+
+// Mail
+export { Mail } from './src/app/models/mail';
+export { MailService } from './src/app/mail/mail.service';
