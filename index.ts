@@ -1,3 +1,4 @@
+import { SearchResult } from './src/app/models/search-result';
 export { OpenfactSyncModule } from './openfact-sync.module';
 
 // Contexts
@@ -47,6 +48,7 @@ export {
 export { UBLDocumentService } from './src/app/documents/ubl-document.service';
 export { UBLDocuments } from './src/app/documents/ubl-documents';
 export { FileWrapper } from './src/app/models/file-wrapper';
+export { SearchResult } from './src/app/models/search-result';
 
 // Mail
 export { Mail } from './src/app/models/mail';
