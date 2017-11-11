@@ -125,6 +125,19 @@ export class UBLDocumentService {
   }
 
   /**
+   * Update UBLDocument
+   */
+  updateMassive(documents: UBLDocument[]): Observable<UBLDocument> {
+    let url = `${this.documentsUrl}/massive`;
+    let payload = JSON.stringify({ data: documents });
+    return this.http
+      .patch(url, payload, { headers: this.headers })
+      .catch((error) => {
+        return this.handleError(error);
+      });
+  }
+
+  /**
    * Delete document using id
    */
   deleteDocument(document: UBLDocument): Observable<UBLDocument> {
@@ -196,8 +209,8 @@ export class UBLDocumentService {
       });
   }
 
-  getDocumentXmlById(documentId: string): Observable<FileWrapper> {
-    let url = `${this.documentsUrl}/${documentId}/xml`;
+  downloadDocumentById(documentId: string): Observable<FileWrapper> {
+    let url = `${this.documentsUrl}/${documentId}/download`;
     return this.http.get(url, {
       headers: this.headers,
       responseType: ResponseContentType.Blob
@@ -226,12 +239,78 @@ export class UBLDocumentService {
       });
   }
 
-  getDocumentReportById(documentId: string, theme?: string, format?: string): Observable<FileWrapper> {
+  printDocumentById(documentId: string, theme?: string, format?: string): Observable<FileWrapper> {
     let params = new URLSearchParams();
     if (theme) params.append('theme', theme);
     if (format) params.append('format', format);
 
-    let url = `${this.documentsUrl}/${documentId}/report`;
+    let url = `${this.documentsUrl}/${documentId}/print`;
+    return this.http.get(url, {
+      headers: this.headers,
+      responseType: ResponseContentType.Blob,
+      params: params
+    })
+      .map((response) => {
+        let filename;
+        let headers = response.headers;
+        let disposition = headers.get('Content-Disposition');
+        if (disposition && disposition.indexOf('attachment') !== -1) {
+          var filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+          var matches = filenameRegex.exec(disposition);
+          if (matches != null && matches[1]) {
+            filename = matches[1].replace(/['"]/g, '');
+          }
+        }
+
+        let file = response.blob();
+        let blob = new Blob([file]);
+
+        return {
+          filename: filename,
+          file: blob
+        } as FileWrapper;
+      })
+      .catch((error) => {
+        return this.handleError(error);
+      });
+  }
+
+  downloadDocumentsMassive(documents: string[]): Observable<FileWrapper> {
+    let url = `${this.documentsUrl}/massive/download`;
+    return this.http.get(url, {
+      headers: this.headers,
+      responseType: ResponseContentType.Blob
+    })
+      .map((response) => {
+        let filename;
+        let headers = response.headers;
+        let disposition = headers.get('Content-Disposition');
+        if (disposition && disposition.indexOf('attachment') !== -1) {
+          var filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+          var matches = filenameRegex.exec(disposition);
+          if (matches != null && matches[1]) {
+            filename = matches[1].replace(/['"]/g, '');
+          }
+        }
+
+        let file = response.blob();
+        let blob = new Blob([file]);
+        return {
+          filename: filename,
+          file: blob
+        } as FileWrapper;
+      })
+      .catch((error) => {
+        return this.handleError(error);
+      });
+  }
+
+  printDocumentsMassive(documents: string[], theme?: string, format?: string): Observable<FileWrapper> {
+    let params = new URLSearchParams();
+    if (theme) params.append('theme', theme);
+    if (format) params.append('format', format);
+
+    let url = `${this.documentsUrl}/massive/print`;
     return this.http.get(url, {
       headers: this.headers,
       responseType: ResponseContentType.Blob,
