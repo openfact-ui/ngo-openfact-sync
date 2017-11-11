@@ -276,10 +276,14 @@ export class UBLDocumentService {
   }
 
   downloadDocumentsMassive(documents: string[]): Observable<FileWrapper> {
+    let params = new URLSearchParams();
+    documents.forEach(d => params.append('documents', d));
+
     let url = `${this.documentsUrl}/massive/download`;
     return this.http.get(url, {
       headers: this.headers,
-      responseType: ResponseContentType.Blob
+      responseType: ResponseContentType.Blob,
+      params: params
     })
       .map((response) => {
         let filename;
@@ -307,6 +311,7 @@ export class UBLDocumentService {
 
   printDocumentsMassive(documents: string[], theme?: string, format?: string): Observable<FileWrapper> {
     let params = new URLSearchParams();
+    documents.forEach(d => params.append('documents', d));
     if (theme) params.append('theme', theme);
     if (format) params.append('format', format);
 
