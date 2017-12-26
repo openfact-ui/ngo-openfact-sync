@@ -1,4 +1,3 @@
-import { SearchResult } from './src/app/models/search-result';
 export { OpenfactSyncModule } from './openfact-sync.module';
 
 // Contexts
