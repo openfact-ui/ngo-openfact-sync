@@ -31,6 +31,14 @@ export class UBLDocumentAttributes {
     id: string;
     assignedId: string;
     type: string;
+    currency: string;
+    amount: number;
+    issueDate: Date;
+    supplierName: string;
+    supplierAssignedId: string;
+    customerName: string;
+    customerAssignedId: string;
+    provider: string;
     starred: boolean; //
     tags: string[];
     'updated-at': string;
