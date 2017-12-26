@@ -1,3 +1,5 @@
+import { ValidSpaceNameValidatorDirective } from './src/app/spaces/valid-space-name.directive';
+import { ValidSpaceAssignedIdValidatorDirective } from './src/app/spaces/valid-space-assigned-id.directive';
 
 import { SpaceNamePipe } from './src/app/spaces/space-name.pipe';
 import { NgModule } from '@angular/core';
@@ -6,10 +8,14 @@ import { NgModule } from '@angular/core';
   imports: [
   ],
   declarations: [
-    SpaceNamePipe
+    SpaceNamePipe,
+    ValidSpaceNameValidatorDirective,
+    ValidSpaceAssignedIdValidatorDirective
   ],
   exports: [
-    SpaceNamePipe
+    SpaceNamePipe,
+    ValidSpaceNameValidatorDirective,
+    ValidSpaceAssignedIdValidatorDirective
   ],
   providers: [
     SpaceNamePipe
